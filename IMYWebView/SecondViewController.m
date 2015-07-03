@@ -29,6 +29,15 @@
     IMYWebView* webView = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:YES];
     [self.view addSubview:webView];
     
+    if(webView.usingUIWebView)
+    {
+        self.title = @"IMYWebView-UIWebView";
+    }
+    else
+    {
+        self.title = @"IMYWebView-WKWebView";
+    }
+    
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
 }
 
