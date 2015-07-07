@@ -16,5 +16,5 @@
     "ios": "5.0"
   },
   "source_files": ["Classes/*.{h,m}","Classes/*/*.{h,m}"],
-  "requires_arc": true,
+  "requires_arc": true
 }

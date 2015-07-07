@@ -393,8 +393,17 @@
     }
     else
     {
-        [(WKWebView*)self.realWebView evaluateJavaScript:javaScriptString completionHandler:nil];
-        return nil;
+        __block NSString* result = nil;
+        __block BOOL isExecuted = NO;
+        [(WKWebView*)self.realWebView evaluateJavaScript:javaScriptString completionHandler:^(id obj, NSError *error) {
+            result = obj;
+            isExecuted = YES;
+        }];
+        
+        while (isExecuted == NO) {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
+        return result;
     }
 }
 -(void)setScalesPageToFit:(BOOL)scalesPageToFit

@@ -61,7 +61,7 @@
 - (void)stopLoading;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler;
-///如果内部使用了 WKWebView 返回值永远为nil
+///不建议使用这个办法  因为会在内部等待webView 的执行结果
 - (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)javaScriptString __deprecated_msg("Method deprecated. Use [evaluateJavaScript:completionHandler:]");
 
 ///是否根据视图大小来缩放页面  默认为YES
