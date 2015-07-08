@@ -105,8 +105,8 @@
     webView.backgroundColor = [UIColor clearColor];
     webView.opaque = NO;
     
-    [self addObserver:webView forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-    [self addObserver:webView forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
+    [webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+    [webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
     
     _realWebView = webView;
 }
@@ -569,8 +569,8 @@
         webView.UIDelegate = nil;
         webView.navigationDelegate = nil;
         
-        [self removeObserver:webView forKeyPath:@"estimatedProgress"];
-        [self removeObserver:webView forKeyPath:@"title"];
+        [webView removeObserver:self forKeyPath:@"estimatedProgress"];
+        [webView removeObserver:self forKeyPath:@"title"];
     }
     [_realWebView scrollView].delegate = nil;
     [_realWebView stopLoading];

@@ -23,7 +23,9 @@
     }
     return self;
 }
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
+    self.view.backgroundColor = [UIColor whiteColor];
     [super viewDidLoad];
     IMYWebView* webView = [[IMYWebView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:webView];
