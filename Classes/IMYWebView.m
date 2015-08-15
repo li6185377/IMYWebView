@@ -11,7 +11,7 @@
 #import "IMY_NJKWebViewProgress.h"
 #import <TargetConditionals.h>
 #import <dlfcn.h>
-#import "WebKit.h"
+#import <WebKit/WebKit.h>
 
 @interface IMYWebView()<UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate>
 
@@ -25,22 +25,7 @@
 @end
 
 @implementation IMYWebView
-+(void)load
-{
-    // Dynamically load WebKit if iOS version >= 8
-    if ([UIDevice currentDevice].systemVersion.floatValue >= 8)
-    {
-#if TARGET_IPHONE_SIMULATOR
-        NSString *frameworkPath = [[NSProcessInfo processInfo] environment][@"DYLD_FALLBACK_FRAMEWORK_PATH"];
-        if (frameworkPath) {
-            NSString *webkitLibraryPath = [NSString pathWithComponents:@[frameworkPath, @"WebKit.framework", @"WebKit"]];
-            dlopen([webkitLibraryPath cStringUsingEncoding:NSUTF8StringEncoding], RTLD_LAZY);
-        }
-#else
-        dlopen("/System/Library/Frameworks/WebKit.framework/WebKit", RTLD_LAZY);
-#endif
-    }
-}
+
 @synthesize usingUIWebView = _usingUIWebView;
 @synthesize realWebView = _realWebView;
 @synthesize scalesPageToFit = _scalesPageToFit;
@@ -66,8 +51,6 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        
         _usingUIWebView = usingUIWebView;
         [self _initMyself];
     }
@@ -193,7 +176,7 @@
 }
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    [self callback_webViewDidFinishLoad];
+    [self callback_webViewDidStartLoad];
 }
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
@@ -209,7 +192,7 @@
 }
 #pragma mark- WKUIDelegate
 ///--  还没用到
-#pragma mark- CALLBACK IMYWebView Delegate
+#pragma mark- CALLBACK IMYVKWebView Delegate
 
 - (void)callback_webViewDidFinishLoad
 {
@@ -248,7 +231,7 @@
 #pragma mark- 基础方法
 -(UIScrollView *)scrollView
 {
-   return [(id)self.realWebView scrollView];
+    return [(id)self.realWebView scrollView];
 }
 
 - (id)loadRequest:(NSURLRequest *)request
@@ -263,7 +246,7 @@
     }
     else
     {
-       return [(WKWebView*)self.realWebView loadRequest:request];
+        return [(WKWebView*)self.realWebView loadRequest:request];
     }
 }
 - (id)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
@@ -353,9 +336,9 @@
 {
     if(_usingUIWebView)
     {
-        if(_originRequest)
+        if(self.originRequest)
         {
-            [self loadRequest:_originRequest];
+            [self evaluateJavaScript:[NSString stringWithFormat:@"window.location.replace('%@')",self.originRequest.URL.absoluteString] completionHandler:nil];
         }
         return nil;
     }
@@ -422,8 +405,12 @@
         
         WKWebView* webView = _realWebView;
         
-        NSString *jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport');"
-        "meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
+        NSString *jScript = @"var meta = document.createElement('meta'); \
+        meta.name = 'viewport'; \
+        meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'; \
+        var head = document.getElementsByTagName('head')[0];\
+        head.appendChild(meta);";
+        
         if(scalesPageToFit)
         {
             WKUserScript *wkUScript = [[NSClassFromString(@"WKUserScript") alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];

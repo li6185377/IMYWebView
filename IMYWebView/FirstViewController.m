@@ -10,7 +10,7 @@
 #import "IMYWebView.h"
 
 @interface FirstViewController ()
-
+@property(strong,nonatomic)IMYWebView* webView;
 @end
 
 @implementation FirstViewController
@@ -27,19 +27,19 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     [super viewDidLoad];
-    IMYWebView* webView = [[IMYWebView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:webView];
+    self.webView = [[IMYWebView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_webView];
     
-    if(webView.usingUIWebView)
+    if(_webView.usingUIWebView)
     {
-        self.title = @"IMYWebView-UIWebView";
+        self.title = @"ClickRefresh-UIWebView";
     }
     else
     {
-        self.title = @"IMYWebView-WKWebView";
+        self.title = @"ClickRefresh-WKWebView";
     }
     
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
+    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.tmall.com"]]];
 }
 
 - (void)didReceiveMemoryWarning {

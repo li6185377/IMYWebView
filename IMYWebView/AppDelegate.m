@@ -12,17 +12,33 @@
 
 @end
 
-@implementation AppDelegate
+@interface MYTabbarController : UITabBarController <UITabBarControllerDelegate>
 
+@end
+
+@implementation MYTabbarController
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.delegate = self;
+}
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    [[viewController valueForKey:@"webView"] reload];
+}
+
+@end
+
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_window.rootViewController presentViewController:[FirstViewController new] animated:YES completion:nil];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [_window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-        });
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [_window.rootViewController presentViewController:[FirstViewController new] animated:YES completion:nil];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [_window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+//        });
+//    });
     return YES;
 }
 

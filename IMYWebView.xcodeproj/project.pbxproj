@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3647126D1B7F2F19001C78B8 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3647126C1B7F2F19001C78B8 /* WebKit.framework */; };
 		36A5AE2B1B4627E100DF4CD0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5AE2A1B4627E100DF4CD0 /* main.m */; };
 		36A5AE2E1B4627E100DF4CD0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5AE2D1B4627E100DF4CD0 /* AppDelegate.m */; };
 		36A5AE311B4627E100DF4CD0 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5AE301B4627E100DF4CD0 /* FirstViewController.m */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3647126C1B7F2F19001C78B8 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		36A5AE251B4627E100DF4CD0 /* IMYWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMYWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A5AE291B4627E100DF4CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36A5AE2A1B4627E100DF4CD0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -47,27 +49,6 @@
 		36A5AE471B4627E100DF4CD0 /* IMYWebViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMYWebViewTests.m; sourceTree = "<group>"; };
 		36A5AE521B46282F00DF4CD0 /* IMYWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMYWebView.h; sourceTree = "<group>"; };
 		36A5AE531B46282F00DF4CD0 /* IMYWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMYWebView.m; sourceTree = "<group>"; };
-		36A5AE551B46282F00DF4CD0 /* WebKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebKit.h; sourceTree = "<group>"; };
-		36A5AE561B46282F00DF4CD0 /* WebKitLegacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebKitLegacy.h; sourceTree = "<group>"; };
-		36A5AE571B46282F00DF4CD0 /* WKBackForwardList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKBackForwardList.h; sourceTree = "<group>"; };
-		36A5AE581B46282F00DF4CD0 /* WKBackForwardListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKBackForwardListItem.h; sourceTree = "<group>"; };
-		36A5AE591B46282F00DF4CD0 /* WKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKError.h; sourceTree = "<group>"; };
-		36A5AE5A1B46282F00DF4CD0 /* WKFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKFoundation.h; sourceTree = "<group>"; };
-		36A5AE5B1B46282F00DF4CD0 /* WKFrameInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKFrameInfo.h; sourceTree = "<group>"; };
-		36A5AE5C1B46282F00DF4CD0 /* WKNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKNavigation.h; sourceTree = "<group>"; };
-		36A5AE5D1B46282F00DF4CD0 /* WKNavigationAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKNavigationAction.h; sourceTree = "<group>"; };
-		36A5AE5E1B46282F00DF4CD0 /* WKNavigationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKNavigationDelegate.h; sourceTree = "<group>"; };
-		36A5AE5F1B46282F00DF4CD0 /* WKNavigationResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKNavigationResponse.h; sourceTree = "<group>"; };
-		36A5AE601B46282F00DF4CD0 /* WKPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKPreferences.h; sourceTree = "<group>"; };
-		36A5AE611B46282F00DF4CD0 /* WKProcessPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKProcessPool.h; sourceTree = "<group>"; };
-		36A5AE621B46282F00DF4CD0 /* WKScriptMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKScriptMessage.h; sourceTree = "<group>"; };
-		36A5AE631B46282F00DF4CD0 /* WKScriptMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKScriptMessageHandler.h; sourceTree = "<group>"; };
-		36A5AE641B46282F00DF4CD0 /* WKUIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKUIDelegate.h; sourceTree = "<group>"; };
-		36A5AE651B46282F00DF4CD0 /* WKUserContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKUserContentController.h; sourceTree = "<group>"; };
-		36A5AE661B46282F00DF4CD0 /* WKUserScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKUserScript.h; sourceTree = "<group>"; };
-		36A5AE671B46282F00DF4CD0 /* WKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebView.h; sourceTree = "<group>"; };
-		36A5AE681B46282F00DF4CD0 /* WKWebViewConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewConfiguration.h; sourceTree = "<group>"; };
-		36A5AE691B46282F00DF4CD0 /* WKWindowFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWindowFeatures.h; sourceTree = "<group>"; };
 		36A5AE6F1B462AE500DF4CD0 /* IMY_NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMY_NJKWebViewProgress.h; sourceTree = "<group>"; };
 		36A5AE701B462AE500DF4CD0 /* IMY_NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMY_NJKWebViewProgress.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3647126D1B7F2F19001C78B8 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +75,7 @@
 		36A5AE1C1B4627E100DF4CD0 = {
 			isa = PBXGroup;
 			children = (
+				3647126C1B7F2F19001C78B8 /* WebKit.framework */,
 				36A5AE511B46282F00DF4CD0 /* Classes */,
 				36A5AE271B4627E100DF4CD0 /* IMYWebView */,
 				36A5AE441B4627E100DF4CD0 /* IMYWebViewTests */,
@@ -158,37 +141,8 @@
 				36A5AE521B46282F00DF4CD0 /* IMYWebView.h */,
 				36A5AE531B46282F00DF4CD0 /* IMYWebView.m */,
 				36A5AE6E1B462AE500DF4CD0 /* UIWebViewProgress */,
-				36A5AE541B46282F00DF4CD0 /* WebKit */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		36A5AE541B46282F00DF4CD0 /* WebKit */ = {
-			isa = PBXGroup;
-			children = (
-				36A5AE551B46282F00DF4CD0 /* WebKit.h */,
-				36A5AE561B46282F00DF4CD0 /* WebKitLegacy.h */,
-				36A5AE571B46282F00DF4CD0 /* WKBackForwardList.h */,
-				36A5AE581B46282F00DF4CD0 /* WKBackForwardListItem.h */,
-				36A5AE591B46282F00DF4CD0 /* WKError.h */,
-				36A5AE5A1B46282F00DF4CD0 /* WKFoundation.h */,
-				36A5AE5B1B46282F00DF4CD0 /* WKFrameInfo.h */,
-				36A5AE5C1B46282F00DF4CD0 /* WKNavigation.h */,
-				36A5AE5D1B46282F00DF4CD0 /* WKNavigationAction.h */,
-				36A5AE5E1B46282F00DF4CD0 /* WKNavigationDelegate.h */,
-				36A5AE5F1B46282F00DF4CD0 /* WKNavigationResponse.h */,
-				36A5AE601B46282F00DF4CD0 /* WKPreferences.h */,
-				36A5AE611B46282F00DF4CD0 /* WKProcessPool.h */,
-				36A5AE621B46282F00DF4CD0 /* WKScriptMessage.h */,
-				36A5AE631B46282F00DF4CD0 /* WKScriptMessageHandler.h */,
-				36A5AE641B46282F00DF4CD0 /* WKUIDelegate.h */,
-				36A5AE651B46282F00DF4CD0 /* WKUserContentController.h */,
-				36A5AE661B46282F00DF4CD0 /* WKUserScript.h */,
-				36A5AE671B46282F00DF4CD0 /* WKWebView.h */,
-				36A5AE681B46282F00DF4CD0 /* WKWebViewConfiguration.h */,
-				36A5AE691B46282F00DF4CD0 /* WKWindowFeatures.h */,
-			);
-			path = WebKit;
 			sourceTree = "<group>";
 		};
 		36A5AE6E1B462AE500DF4CD0 /* UIWebViewProgress */ = {
@@ -432,6 +386,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = IMYWebView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -442,6 +397,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = IMYWebView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -500,6 +456,7 @@
 				36A5AE4D1B4627E100DF4CD0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		36A5AE4E1B4627E100DF4CD0 /* Build configuration list for PBXNativeTarget "IMYWebViewTests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +465,7 @@
 				36A5AE501B4627E100DF4CD0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
