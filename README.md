@@ -22,11 +22,6 @@ pod 'IMYWebView'
 直接把你项目中的 'UIWebView' 名称替换为 'IMYWebView'
 
 ##警告
-由于WKWebView 调用js 方法是延迟主线程调用  所以要把调用方法 换为 
-
-```objective-c
-- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler;
-///如果内部使用了 WKWebView 返回值永远为nil
-- (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)javaScriptString __deprecated_msg("Method deprecated. Use [evaluateJavaScript:completionHandler:]");
-```
-
+部分在UIWebView显示正常的页面 在 WKWebView 会放大。 
+比如 taobao.com 的页面会放大   但是 tmall.com  就不会。。。。 
+难道是天猫做的更好？？？？？
