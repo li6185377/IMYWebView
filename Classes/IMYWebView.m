@@ -160,7 +160,9 @@
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     BOOL resultBOOL = [self callback_webViewShouldStartLoadWithRequest:navigationAction.request navigationType:navigationAction.navigationType];
-    if(resultBOOL)
+    BOOL isLoadingDisableScheme = [self isLoadingWKWebViewDisableScheme:navigationAction.request.URL];
+    
+    if(resultBOOL && !isLoadingDisableScheme)
     {
         self.currentRequest = navigationAction.request;
         if(navigationAction.targetFrame == nil)
@@ -229,6 +231,23 @@
 }
 
 #pragma mark- 基础方法
+///判断当前加载的url是否是WKWebView不能打开的协议类型
+- (BOOL)isLoadingWKWebViewDisableScheme:(NSURL *)url
+{
+    BOOL retValue = NO;
+    
+    //判断是否正在加载WKWebview不能识别的协议类型：phone numbers, email address, maps, etc.
+    if([url.scheme isEqualToString:@"tel"]) {
+        UIApplication *app = [UIApplication sharedApplication];
+        if ([app canOpenURL:url]) {
+            [app openURL:url];
+            retValue = YES;
+        }
+    }
+    
+    return retValue;
+}
+
 -(UIScrollView *)scrollView
 {
     return [(id)self.realWebView scrollView];
