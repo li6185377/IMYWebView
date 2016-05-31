@@ -75,6 +75,11 @@ const float IMY_NJKFinalProgressValue = 0.9f;
     [self setProgress:0.0];
 }
 
+- (NSString *)getNonFragmentStringWithURL:(NSURL*)url
+{
+    return [url.absoluteString stringByReplacingOccurrencesOfString:[@"#" stringByAppendingString:url.fragment] withString:@""];
+}
+
 #pragma mark -
 #pragma mark UIWebViewDelegate
 
@@ -92,11 +97,12 @@ const float IMY_NJKFinalProgressValue = 0.9f;
     
     BOOL isFragmentJump = NO;
     if (request.URL.fragment) {
-        NSString *nonFragmentURL = [request.URL.absoluteString stringByReplacingOccurrencesOfString:[@"#" stringByAppendingString:request.URL.fragment] withString:@""];
+        NSString *nonFragmentURL = [self getNonFragmentStringWithURL:request.URL];
         isFragmentJump = [nonFragmentURL isEqualToString:webView.request.URL.absoluteString];
     }
 
-    BOOL isTopLevelNavigation = [request.mainDocumentURL isEqual:request.URL];
+    NSString* refererURL = [request valueForHTTPHeaderField:@"Referer"];
+    BOOL isTopLevelNavigation = (refererURL.length == 0 || [refererURL isEqualToString:request.URL.absoluteString] || [request.mainDocumentURL isEqual:request.URL]);
 
     BOOL isHTTP = [request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"];
     if (ret && !isFragmentJump && isHTTP && isTopLevelNavigation) {
@@ -136,7 +142,12 @@ const float IMY_NJKFinalProgressValue = 0.9f;
         [webView stringByEvaluatingJavaScriptFromString:waitForCompleteJS];
     }
     
-    BOOL isNotRedirect = _currentURL && [_currentURL isEqual:webView.request.mainDocumentURL];
+    BOOL isNotRedirect = YES;
+    if (_currentURL && _currentURL.fragment) {
+        NSString *nonFragmentCurrentURL = [self getNonFragmentStringWithURL:_currentURL];
+        NSString *nonFragmentMainDocumentURL = [self getNonFragmentStringWithURL:webView.request.mainDocumentURL];
+        isNotRedirect = _currentURL && [nonFragmentCurrentURL isEqual:nonFragmentMainDocumentURL];
+    }
     BOOL complete = [readyState isEqualToString:@"complete"];
     if (complete && isNotRedirect) {
         [self completeProgress];
@@ -161,7 +172,12 @@ const float IMY_NJKFinalProgressValue = 0.9f;
         [webView stringByEvaluatingJavaScriptFromString:waitForCompleteJS];
     }
     
-    BOOL isNotRedirect = _currentURL && [_currentURL isEqual:webView.request.mainDocumentURL];
+    BOOL isNotRedirect = YES;
+    if (_currentURL && _currentURL.fragment) {
+        NSString *nonFragmentCurrentURL = [self getNonFragmentStringWithURL:_currentURL];
+        NSString *nonFragmentMainDocumentURL = [self getNonFragmentStringWithURL:webView.request.mainDocumentURL];
+        isNotRedirect = _currentURL && [nonFragmentCurrentURL isEqual:nonFragmentMainDocumentURL];
+    }
     BOOL complete = [readyState isEqualToString:@"complete"];
     if (complete && isNotRedirect) {
         [self completeProgress];
