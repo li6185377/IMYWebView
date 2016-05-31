@@ -396,24 +396,32 @@
         var head = document.getElementsByTagName('head')[0];\
         head.appendChild(meta);";
 
+        WKUserContentController *userContentController = webView.configuration.userContentController;
+        NSMutableArray<WKUserScript *> *array = [userContentController.userScripts mutableCopy];
+        WKUserScript* fitWKUScript = nil;
+        for (WKUserScript* wkUScript in array) {
+            if ([wkUScript.source isEqual:jScript]) {
+                fitWKUScript = wkUScript;
+                break;
+            }
+        }
         if (scalesPageToFit) {
-            WKUserScript* wkUScript = [[NSClassFromString(@"WKUserScript") alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
-            [webView.configuration.userContentController addUserScript:wkUScript];
+            if (!fitWKUScript) {
+                fitWKUScript = [[NSClassFromString(@"WKUserScript") alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:NO];
+                [userContentController addUserScript:fitWKUScript];
+            }
         }
         else {
-            NSMutableArray* array = [NSMutableArray arrayWithArray:webView.configuration.userContentController.userScripts];
-            for (WKUserScript* wkUScript in array) {
-                if ([wkUScript.source isEqual:jScript]) {
-                    [array removeObject:wkUScript];
-                    break;
-                }
+            if (fitWKUScript) {
+                [array removeObject:fitWKUScript];
             }
+            ///没法修改数组 只能移除全部 再重新添加
+            [userContentController removeAllUserScripts];
             for (WKUserScript* wkUScript in array) {
-                [webView.configuration.userContentController addUserScript:wkUScript];
+                [userContentController addUserScript:wkUScript];
             }
         }
     }
-
     _scalesPageToFit = scalesPageToFit;
 }
 - (BOOL)scalesPageToFit
