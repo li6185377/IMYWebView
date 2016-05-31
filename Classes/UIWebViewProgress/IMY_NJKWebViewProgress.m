@@ -77,7 +77,15 @@ const float IMY_NJKFinalProgressValue = 0.9f;
 
 - (NSString *)getNonFragmentStringWithURL:(NSURL*)url
 {
-    return [url.absoluteString stringByReplacingOccurrencesOfString:[@"#" stringByAppendingString:url.fragment] withString:@""];
+    if (!url) {
+        return @"";
+    }
+    if (url.fragment) {
+        return [url.absoluteString stringByReplacingOccurrencesOfString:[@"#" stringByAppendingString:url.fragment] withString:@""];
+    }
+    else {
+        return url.absoluteString;
+    }
 }
 
 #pragma mark -
