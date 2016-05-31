@@ -76,9 +76,12 @@
 - (void)initWKWebView
 {
     WKWebViewConfiguration* configuration = [[NSClassFromString(@"WKWebViewConfiguration") alloc] init];
-    configuration.preferences = [NSClassFromString(@"WKPreferences") new];
     configuration.userContentController = [NSClassFromString(@"WKUserContentController") new];
-
+    
+    WKPreferences* preferences = [NSClassFromString(@"WKPreferences") new];
+    preferences.javaScriptCanOpenWindowsAutomatically = YES;
+    configuration.preferences = preferences;
+    
     WKWebView* webView = [[NSClassFromString(@"WKWebView") alloc] initWithFrame:self.bounds configuration:configuration];
     webView.UIDelegate = self;
     webView.navigationDelegate = self;
@@ -122,7 +125,22 @@
 
     _realWebView = webView;
 }
-
+- (void)addScriptMessageHandler:(id<WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name
+{
+    if (!_usingUIWebView) {
+        WKWebViewConfiguration* configuration = [(WKWebView*)self.realWebView configuration];
+        [configuration.userContentController addScriptMessageHandler:scriptMessageHandler name:name];
+    }
+}
+- (JSContext *)jsContext
+{
+    if (_usingUIWebView) {
+        return [(UIWebView*)self.realWebView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    }
+    else {
+        return nil;
+    }
+}
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView*)webView
