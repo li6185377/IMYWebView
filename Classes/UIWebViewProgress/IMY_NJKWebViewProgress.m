@@ -151,10 +151,10 @@ const float IMY_NJKFinalProgressValue = 0.9f;
     }
     
     BOOL isNotRedirect = YES;
-    if (_currentURL && _currentURL.fragment) {
+    {
         NSString *nonFragmentCurrentURL = [self getNonFragmentStringWithURL:_currentURL];
         NSString *nonFragmentMainDocumentURL = [self getNonFragmentStringWithURL:webView.request.mainDocumentURL];
-        isNotRedirect = _currentURL && [nonFragmentCurrentURL isEqual:nonFragmentMainDocumentURL];
+        isNotRedirect = (_currentURL && [nonFragmentCurrentURL isEqualToString:nonFragmentMainDocumentURL]);
     }
     BOOL complete = [readyState isEqualToString:@"complete"];
     if (complete && isNotRedirect) {
@@ -181,10 +181,10 @@ const float IMY_NJKFinalProgressValue = 0.9f;
     }
     
     BOOL isNotRedirect = YES;
-    if (_currentURL && _currentURL.fragment) {
+    {
         NSString *nonFragmentCurrentURL = [self getNonFragmentStringWithURL:_currentURL];
         NSString *nonFragmentMainDocumentURL = [self getNonFragmentStringWithURL:webView.request.mainDocumentURL];
-        isNotRedirect = _currentURL && [nonFragmentCurrentURL isEqual:nonFragmentMainDocumentURL];
+        isNotRedirect = (_currentURL && [nonFragmentCurrentURL isEqualToString:nonFragmentMainDocumentURL]);
     }
     BOOL complete = [readyState isEqualToString:@"complete"];
     if (complete && isNotRedirect) {
