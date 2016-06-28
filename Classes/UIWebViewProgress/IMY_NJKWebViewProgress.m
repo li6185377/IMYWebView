@@ -106,7 +106,8 @@ const float IMY_NJKFinalProgressValue = 0.9f;
     BOOL isFragmentJump = NO;
     if (request.URL.fragment) {
         NSString *nonFragmentURL = [self getNonFragmentStringWithURL:request.URL];
-        isFragmentJump = [nonFragmentURL isEqualToString:webView.request.URL.absoluteString];
+        NSString *mainFragmentURL = [self getNonFragmentStringWithURL:webView.request.URL];
+        isFragmentJump = [nonFragmentURL isEqualToString:mainFragmentURL];
     }
 
     NSString* refererURL = [request valueForHTTPHeaderField:@"Referer"];
