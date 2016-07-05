@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class IMYWebView;
+@protocol WKScriptMessageHandler;
+@class IMYWebView,JSContext;
+
 @protocol IMYWebViewDelegate <NSObject>
 @optional
 
@@ -35,6 +37,11 @@
 @property (nonatomic, readonly) double estimatedProgress;
 
 @property (nonatomic, readonly) NSURLRequest *originRequest;
+
+///只有ios7以上的UIWebView才能获取到，
+@property (nonatomic, readonly) JSContext *jsContext;
+///WKWebView 请使用 - (void)addScriptMessageHandler:(id <WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name;
+- (void)addScriptMessageHandler:(id <WKScriptMessageHandler>)scriptMessageHandler name:(NSString *)name;
 
 ///back 层数
 - (NSInteger)countOfHistory;

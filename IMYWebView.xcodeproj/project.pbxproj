@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3647126D1B7F2F19001C78B8 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3647126C1B7F2F19001C78B8 /* WebKit.framework */; };
+		3647126D1B7F2F19001C78B8 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3647126C1B7F2F19001C78B8 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		366B23001CFD7CDE006743C0 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366B22FF1CFD7CDE006743C0 /* JavaScriptCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		36A5AE2B1B4627E100DF4CD0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5AE2A1B4627E100DF4CD0 /* main.m */; };
 		36A5AE2E1B4627E100DF4CD0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5AE2D1B4627E100DF4CD0 /* AppDelegate.m */; };
 		36A5AE311B4627E100DF4CD0 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5AE301B4627E100DF4CD0 /* FirstViewController.m */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		3647126C1B7F2F19001C78B8 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		366B22FF1CFD7CDE006743C0 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		36A5AE251B4627E100DF4CD0 /* IMYWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMYWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A5AE291B4627E100DF4CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36A5AE2A1B4627E100DF4CD0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				366B23001CFD7CDE006743C0 /* JavaScriptCore.framework in Frameworks */,
 				3647126D1B7F2F19001C78B8 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +78,7 @@
 		36A5AE1C1B4627E100DF4CD0 = {
 			isa = PBXGroup;
 			children = (
+				366B22FF1CFD7CDE006743C0 /* JavaScriptCore.framework */,
 				3647126C1B7F2F19001C78B8 /* WebKit.framework */,
 				36A5AE511B46282F00DF4CD0 /* Classes */,
 				36A5AE271B4627E100DF4CD0 /* IMYWebView */,
