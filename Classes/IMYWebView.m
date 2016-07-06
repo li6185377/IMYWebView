@@ -149,7 +149,6 @@
     if (self.originRequest == nil) {
         self.originRequest = webView.request;
     }
-
     [self callback_webViewDidFinishLoad];
 }
 - (void)webViewDidStartLoad:(UIWebView*)webView
@@ -165,23 +164,10 @@
     BOOL resultBOOL = [self callback_webViewShouldStartLoadWithRequest:request navigationType:navigationType];
     return resultBOOL;
 }
-
-//加入了alert
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
-    
-    [self callback_webViewrunJavaScriptAlertPanelWithMessage:message initiatedByFrame:frame completionHandler:completionHandler];
-}
-
-- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
-    
-    [self callback_webViewrunJavaScriptConfirmPanelWithMessage:message initiatedByFrame:frame completionHandler:completionHandler];
-}
-
 - (void)webViewProgress:(IMY_NJKWebViewProgress*)webViewProgress updateProgress:(float)progress
 {
     self.estimatedProgress = progress;
 }
-
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView*)webView decidePolicyForNavigationAction:(WKNavigationAction*)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
@@ -247,22 +233,6 @@
         resultBOOL = [self.delegate webView:self shouldStartLoadWithRequest:request navigationType:navigationType];
     }
     return resultBOOL;
-}
-
-- (void)callback_webViewrunJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
-    
-    if ([self.delegate respondsToSelector:@selector(webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:completionHandler:)]) {
-        
-        [self.delegate webView:self runJavaScriptAlertPanelWithMessage:message initiatedByFrame:frame completionHandler:completionHandler];
-    }
-}
-
-- (void)callback_webViewrunJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
- 
-    if ([self.delegate respondsToSelector:@selector(webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:)]){
-        
-        [self.delegate webView:self runJavaScriptConfirmPanelWithMessage:message initiatedByFrame:frame completionHandler:completionHandler];
-    }
 }
 
 #pragma mark - 基础方法
