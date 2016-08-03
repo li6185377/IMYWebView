@@ -297,6 +297,19 @@
         return [(WKWebView*)self.realWebView loadHTMLString:string baseURL:baseURL];
     }
 }
+- (id)loadData:(NSData *)data MIMEType:(NSString *)MIMEType characterEncodingName:(NSString *)characterEncodingName baseURL:(NSURL *)baseURL {
+    if (data) {
+        if (_usingUIWebView) {
+            [(UIWebView*)self.realWebView loadData:data MIMEType:MIMEType textEncodingName:characterEncodingName baseURL:baseURL];
+            return nil;
+        }
+        else {
+            return [(WKWebView*)self.realWebView loadData:data MIMEType:MIMEType characterEncodingName:characterEncodingName baseURL:baseURL];
+        }
+    }else {
+        return nil;
+    }
+}
 - (NSURLRequest*)currentRequest
 {
     if (_usingUIWebView) {

@@ -53,6 +53,7 @@
 
 - (id)loadRequest:(NSURLRequest*)request;
 - (id)loadHTMLString:(NSString*)string baseURL:(NSURL*)baseURL;
+- (id)loadData:(NSData *)data MIMEType:(NSString *)MIMEType characterEncodingName:(NSString *)characterEncodingName baseURL:(NSURL *)baseURL;
 
 @property (nonatomic, readonly, copy) NSString* title;
 @property (nonatomic, readonly) NSURLRequest* currentRequest;
