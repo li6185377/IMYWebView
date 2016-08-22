@@ -126,6 +126,9 @@
 {
     UIWebView* webView = [[UIWebView alloc] initWithFrame:self.bounds];
     webView.backgroundColor = [UIColor clearColor];
+    webView.allowsInlineMediaPlayback = YES;
+    webView.mediaPlaybackRequiresUserAction = NO;
+    
     webView.opaque = NO;
     for (UIView* subview in [webView.scrollView subviews]) {
         if ([subview isKindOfClass:[UIImageView class]]) {
