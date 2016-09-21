@@ -14,22 +14,21 @@
 #define IMY_NJK_weak unsafe_unretained
 #endif
 
-extern const float IMY_NJKInitialProgressValue;
-extern const float IMY_NJKInteractiveProgressValue;
-extern const float IMY_NJKFinalProgressValue;
+typedef void (^IMY_NJKWebViewProgressBlock)(CGFloat progress);
 
-typedef void (^IMY_NJKWebViewProgressBlock)(float progress);
 @protocol IMY_NJKWebViewProgressDelegate;
-@interface IMY_NJKWebViewProgress : NSObject<UIWebViewDelegate>
-@property (nonatomic, IMY_NJK_weak) id<IMY_NJKWebViewProgressDelegate>progressDelegate;
-@property (nonatomic, IMY_NJK_weak) id<UIWebViewDelegate>webViewProxyDelegate;
+@interface IMY_NJKWebViewProgress : NSObject <UIWebViewDelegate>
+
+@property (nonatomic, IMY_NJK_weak) id<IMY_NJKWebViewProgressDelegate> progressDelegate;
+@property (nonatomic, IMY_NJK_weak) id<UIWebViewDelegate> webViewProxyDelegate;
 @property (nonatomic, copy) IMY_NJKWebViewProgressBlock progressBlock;
-@property (nonatomic, readonly) float progress; // 0.0..1.0
+@property (nonatomic, readonly) CGFloat progress; // 0.0..1.0
 
 - (void)reset;
+
 @end
 
 @protocol IMY_NJKWebViewProgressDelegate <NSObject>
-- (void)webViewProgress:(IMY_NJKWebViewProgress *)webViewProgress updateProgress:(float)progress;
+- (void)webViewProgress:(IMY_NJKWebViewProgress *)webViewProgress updateProgress:(CGFloat)progress;
 @end
 

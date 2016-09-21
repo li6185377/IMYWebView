@@ -183,7 +183,7 @@
     BOOL resultBOOL = [self callback_webViewShouldStartLoadWithRequest:request navigationType:navigationType];
     return resultBOOL;
 }
-- (void)webViewProgress:(IMY_NJKWebViewProgress*)webViewProgress updateProgress:(float)progress
+- (void)webViewProgress:(IMY_NJKWebViewProgress*)webViewProgress updateProgress:(CGFloat)progress
 {
     self.estimatedProgress = progress;
 }
