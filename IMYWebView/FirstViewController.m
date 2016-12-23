@@ -39,7 +39,7 @@
         self.title = @"ClickRefresh-WKWebView";
     }
     
-    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.tmall.com"]]];
+    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.taobao.com"]]];
 }
 
 - (void)didReceiveMemoryWarning {

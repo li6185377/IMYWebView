@@ -126,6 +126,9 @@
 {
     UIWebView* webView = [[UIWebView alloc] initWithFrame:self.bounds];
     webView.backgroundColor = [UIColor clearColor];
+    webView.allowsInlineMediaPlayback = YES;
+    webView.mediaPlaybackRequiresUserAction = NO;
+    
     webView.opaque = NO;
     for (UIView* subview in [webView.scrollView subviews]) {
         if ([subview isKindOfClass:[UIImageView class]]) {
@@ -180,7 +183,7 @@
     BOOL resultBOOL = [self callback_webViewShouldStartLoadWithRequest:request navigationType:navigationType];
     return resultBOOL;
 }
-- (void)webViewProgress:(IMY_NJKWebViewProgress*)webViewProgress updateProgress:(float)progress
+- (void)webViewProgress:(IMY_NJKWebViewProgress*)webViewProgress updateProgress:(CGFloat)progress
 {
     self.estimatedProgress = progress;
 }
@@ -435,12 +438,24 @@
 
         WKWebView* webView = _realWebView;
 
-        NSString* jScript = @"var meta = document.createElement('meta'); \
-        meta.name = 'viewport'; \
-        meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'; \
-        var head = document.getElementsByTagName('head')[0];\
-        head.appendChild(meta);";
-
+        NSString* jScript =
+        @"var head = document.getElementsByTagName('head')[0];\
+        var hasViewPort = 0;\
+        var metas = head.getElementsByTagName('meta');\
+        for (var i = metas.length; i>=0 ; i--) {\
+            var m = metas[i];\
+            if (m.name == 'viewport') {\
+                hasViewPort = 1;\
+                break;\
+            }\
+        }; \
+        if(hasViewPort == 0) { \
+            var meta = document.createElement('meta'); \
+            meta.name = 'viewport'; \
+            meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'; \
+            head.appendChild(meta);\
+        }";
+        
         WKUserContentController *userContentController = webView.configuration.userContentController;
         NSMutableArray<WKUserScript *> *array = [userContentController.userScripts mutableCopy];
         WKUserScript* fitWKUScript = nil;
