@@ -18,6 +18,7 @@
 - (void)webViewDidFinishLoad:(IMYWebView*)webView;
 - (void)webView:(IMYWebView*)webView didFailLoadWithError:(NSError*)error;
 - (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)webView:(IMYWebView*)webView longPressSaveImageUrl:(NSURL *)imageUrl;
 
 @end
 
@@ -26,6 +27,8 @@
 
 ///使用UIWebView
 - (instancetype)initWithFrame:(CGRect)frame usingUIWebView:(BOOL)usingUIWebView;
+///给WKWebView添加cookie：@"document.cookie = 'token=xxxxxxxxxxx';"
+- (instancetype)initWithFrame:(CGRect)frame usingUIWebView:(BOOL)usingUIWebView cookieString:(NSString *)cookieString;
 
 ///会转接 WKUIDelegate，WKNavigationDelegate 内部未实现的回调。
 @property (weak, nonatomic) id<IMYWebViewDelegate> delegate;
@@ -61,6 +64,8 @@
 @property (nonatomic, readonly, getter=isLoading) BOOL loading;
 @property (nonatomic, readonly) BOOL canGoBack;
 @property (nonatomic, readonly) BOOL canGoForward;
+
+@property (nonatomic, assign) BOOL canLongPressSaveImage; //长按是否保存图片
 
 - (id)goBack;
 - (id)goForward;

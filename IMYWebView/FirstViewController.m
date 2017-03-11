@@ -27,7 +27,8 @@
 {
     self.view.backgroundColor = [UIColor whiteColor];
     [super viewDidLoad];
-    self.webView = [[IMYWebView alloc] initWithFrame:self.view.bounds];
+    self.webView = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO cookieString:@"document.cookie = 'token=xxxxxxxxxxx';"];
+    self.webView.canLongPressSaveImage = YES;
     [self.view addSubview:_webView];
     
     if(_webView.usingUIWebView)

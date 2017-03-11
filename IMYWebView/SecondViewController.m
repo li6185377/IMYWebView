@@ -27,6 +27,7 @@
     [super viewDidLoad];
     
     self.webView = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:YES];
+    self.webView.canLongPressSaveImage = YES;
     [self.view addSubview:_webView];
     
     if(_webView.usingUIWebView)

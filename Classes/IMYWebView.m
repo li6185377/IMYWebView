@@ -13,14 +13,15 @@
 #import <WebKit/WebKit.h>
 #import <dlfcn.h>
 
-@interface IMYWebView () <UIWebViewDelegate, WKNavigationDelegate, WKUIDelegate, IMY_NJKWebViewProgressDelegate>
+@interface IMYWebView () <UIWebViewDelegate, WKNavigationDelegate, WKUIDelegate, IMY_NJKWebViewProgressDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) double estimatedProgress;
 @property (nonatomic, strong) NSURLRequest* originRequest;
 @property (nonatomic, strong) NSURLRequest* currentRequest;
 
 @property (nonatomic, copy) NSString* title;
-
+@property (nonatomic, strong) NSURL *saveImageURL;
+@property (nonatomic, copy) NSString *cookieString;
 @property (nonatomic, strong) IMY_NJKWebViewProgress* njkWebViewProgress;
 @end
 
@@ -48,9 +49,14 @@
 }
 - (instancetype)initWithFrame:(CGRect)frame usingUIWebView:(BOOL)usingUIWebView
 {
+    return [self initWithFrame:frame usingUIWebView:usingUIWebView cookieString:nil];
+}
+- (instancetype)initWithFrame:(CGRect)frame usingUIWebView:(BOOL)usingUIWebView cookieString:(NSString *)cookieString{
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
         _usingUIWebView = usingUIWebView;
+        _cookieString = cookieString;
         [self _initMyself];
     }
     return self;
@@ -91,8 +97,15 @@
 }
 - (void)initWKWebView
 {
+    WKUserContentController* userContentController = [NSClassFromString(@"WKUserContentController") new];
+    WKUserScript * cookieScript = [[NSClassFromString(@"WKUserScript") alloc]
+                                   initWithSource: _cookieString
+                                   injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+    [userContentController addUserScript:cookieScript];
+    
+    
     WKWebViewConfiguration* configuration = [[NSClassFromString(@"WKWebViewConfiguration") alloc] init];
-    configuration.userContentController = [NSClassFromString(@"WKUserContentController") new];
+    configuration.userContentController = userContentController;
     
     WKPreferences* preferences = [NSClassFromString(@"WKPreferences") new];
     preferences.javaScriptCanOpenWindowsAutomatically = YES;
@@ -252,6 +265,88 @@
         resultBOOL = [self.delegate webView:self shouldStartLoadWithRequest:request navigationType:navigationType];
     }
     return resultBOOL;
+}
+
+#pragma mark - 处理长按弹出图片
+
+- (void)setCanLongPressSaveImage:(BOOL)canLongPressSaveImage{
+    
+    _canLongPressSaveImage = canLongPressSaveImage;
+    if (_canLongPressSaveImage) {
+        UILongPressGestureRecognizer *longPressGessture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPress:)];
+        longPressGessture.delegate = self;
+        longPressGessture.cancelsTouchesInView = NO;
+        [self addGestureRecognizer:longPressGessture];
+    }
+}
+
+- (void)longPress:(UILongPressGestureRecognizer *)longGesture
+{
+    if (longGesture.state == UIGestureRecognizerStateBegan) {
+        CGPoint recivePoint = [longGesture locationInView:self];
+        recivePoint = [self.realWebView convertPoint:recivePoint fromView:self];
+        
+        CGPoint webViewOffset = [(UIScrollView *)[self.realWebView valueForKey:@"scrollView"] contentOffset];
+        
+        recivePoint.x = recivePoint.x + webViewOffset.x;
+        recivePoint.y = recivePoint.y + webViewOffset.y;
+        
+        [self checkImageAtPoint:recivePoint];
+    }
+}
+
+- (void)checkImageAtPoint:(CGPoint)point
+{
+    //首先得到长按的位置在webView中是什么节点,如果节点处有img,然后提取出url.
+    //注入js
+    [self stringByEvaluatingJavaScriptFromString:@"     \
+     function MyAppGetHTMLElementsAtPoint(x,y) {     \
+     var tags = \",\";                           \
+     var e = document.elementFromPoint(x,y);     \
+     while (e) {                                 \
+     if (e.tagName) {                        \
+     tags += e.tagName + ',';            \
+     }                                       \
+     e = e.parentNode;                           \
+     }                                           \
+     return tags;                                \
+     }"
+     ];
+    
+    //执行js
+    NSString *tags = [self stringByEvaluatingJavaScriptFromString:
+                      [NSString stringWithFormat:@"MyAppGetHTMLElementsAtPoint(%f,%f);",point.x,point.y]];
+    
+    if ([tags rangeOfString:@",IMG,"].location != NSNotFound) {
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                           delegate:self cancelButtonTitle:@"取消"
+                                             destructiveButtonTitle:nil otherButtonTitles:nil];
+        NSString *str = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", point.x, point.y];
+        NSString *imgString= [self stringByEvaluatingJavaScriptFromString:str];
+        self.saveImageURL = [NSURL URLWithString:imgString];
+        [sheet addButtonWithTitle:@"保存图片"];
+        [sheet showInView:self];
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        if ([self.delegate respondsToSelector:@selector(webView:longPressSaveImageUrl:)]) {
+            [self.delegate webView:self longPressSaveImageUrl:self.saveImageURL];
+        }
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    
+    return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 #pragma mark - 基础方法
