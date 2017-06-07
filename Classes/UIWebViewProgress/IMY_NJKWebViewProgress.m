@@ -114,7 +114,9 @@ const CGFloat IMY_NJKFinalProgressValue = 0.9;
     BOOL isTopLevelNavigation = (refererURL.length == 0 || [refererURL isEqualToString:request.URL.absoluteString] || [request.mainDocumentURL isEqual:request.URL]);
 
     BOOL isHTTP = [request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"];
-    if (ret && !isFragmentJump && isHTTP && isTopLevelNavigation) {
+    BOOL shouldReset = ret && !isFragmentJump && isHTTP && isTopLevelNavigation;
+    shouldReset |= (navigationType == UIWebViewNavigationTypeReload);
+    if (shouldReset) {
         _currentURL = request.URL;
         [self reset];
     }
