@@ -151,6 +151,15 @@
         [configuration.userContentController addScriptMessageHandler:scriptMessageHandler name:name];
     }
 }
+
+- (void)removeScriptMessageHandlerName:(NSString*)name {
+    if (!_usingUIWebView) {
+        WKWebViewConfiguration* configuration = [(WKWebView*)self.realWebView configuration];
+        [configuration.userContentController removeScriptMessageHandlerForName:name];
+    }
+}
+
+
 - (JSContext *)jsContext
 {
     if (_usingUIWebView) {

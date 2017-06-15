@@ -44,6 +44,9 @@
 ///WKWebView 跟网页进行交互的方法。
 - (void)addScriptMessageHandler:(id<WKScriptMessageHandler>)scriptMessageHandler name:(NSString*)name;
 
+- (void)removeScriptMessageHandlerName:(NSString*)name;
+
+
 ///back 层数
 - (NSInteger)countOfHistory;
 - (void)gobackWithStep:(NSInteger)step;
