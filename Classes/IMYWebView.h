@@ -18,6 +18,7 @@
 - (void)webViewDidFinishLoad:(IMYWebView*)webView;
 - (void)webView:(IMYWebView*)webView didFailLoadWithError:(NSError*)error;
 - (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)wkWebViewShowInfo:(NSString *)message;
 
 @end
 

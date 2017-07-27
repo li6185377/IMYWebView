@@ -230,6 +230,19 @@
     [self callback_webViewDidFailLoadWithError:error];
 }
 #pragma mark - WKUIDelegate
+//wkwebview默认不响应js的alert,设置代理，并且写alert的回调即可
+-(void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
+    
+    NSLog(@"%@js想要alert",message);
+    if ([self.delegate respondsToSelector:@selector(wkWebViewShowInfo:)]) {
+        [self.delegate wkWebViewShowInfo:message];
+    }
+    //一定要写这一句，否则会崩溃
+    completionHandler();
+    
+}
+
+
 ///--  还没用到
 #pragma mark - CALLBACK IMYVKWebView Delegate
 
