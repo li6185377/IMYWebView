@@ -18,7 +18,11 @@
 - (void)webViewDidFinishLoad:(IMYWebView*)webView;
 - (void)webView:(IMYWebView*)webView didFailLoadWithError:(NSError*)error;
 - (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType;
-- (void)wkWebViewShowInfo:(NSString *)message;
+- (void)wkWebViewShowAlterInfo:(NSString *)message;
+
+- (void)wkWebViewShowConformInfo:(NSString *)message block:(void (^_Nonnull)(BOOL result))completionHandler;
+
+- (void)wkWebViewShowInputPanelInfo:(nullable NSString *)prompt defaultText:(nullable NSString *)defaultText block:(void (^_Nonnull)(NSString * _Nullable result))completionHandler;
 
 @end
 

@@ -234,13 +234,33 @@
 -(void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
     
     NSLog(@"%@js想要alert",message);
-    if ([self.delegate respondsToSelector:@selector(wkWebViewShowInfo:)]) {
-        [self.delegate wkWebViewShowInfo:message];
+    if ([self.delegate respondsToSelector:@selector(wkWebViewShowAlterInfo:)]) {
+        [self.delegate wkWebViewShowAlterInfo:message];
     }
     //一定要写这一句，否则会崩溃
     completionHandler();
     
 }
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(wkWebViewShowConformInfo:block:)]) {
+        [self.delegate wkWebViewShowConformInfo:message block:^(BOOL result) {
+            completionHandler(result);
+        }];
+    }
+}
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(wkWebViewShowInputPanelInfo:defaultText:block:)]) {
+        [self.delegate wkWebViewShowInputPanelInfo:prompt defaultText:defaultText block:^(NSString * _Nullable result) {
+            completionHandler(result);
+        }];
+    }
+}
+
+
 
 
 ///--  还没用到
