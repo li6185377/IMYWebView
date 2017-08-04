@@ -151,6 +151,15 @@
         [configuration.userContentController addScriptMessageHandler:scriptMessageHandler name:name];
     }
 }
+
+- (void)removeScriptMessageHandlerName:(NSString*)name {
+    if (!_usingUIWebView) {
+        WKWebViewConfiguration* configuration = [(WKWebView*)self.realWebView configuration];
+        [configuration.userContentController removeScriptMessageHandlerForName:name];
+    }
+}
+
+
 - (JSContext *)jsContext
 {
     if (_usingUIWebView) {
@@ -221,6 +230,39 @@
     [self callback_webViewDidFailLoadWithError:error];
 }
 #pragma mark - WKUIDelegate
+//wkwebview默认不响应js的alert,设置代理，并且写alert的回调即可
+-(void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
+    
+    NSLog(@"%@js想要alert",message);
+    if ([self.delegate respondsToSelector:@selector(wkWebViewShowAlterInfo:)]) {
+        [self.delegate wkWebViewShowAlterInfo:message];
+    }
+    //一定要写这一句，否则会崩溃
+    completionHandler();
+    
+}
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(wkWebViewShowConformInfo:block:)]) {
+        [self.delegate wkWebViewShowConformInfo:message block:^(BOOL result) {
+            completionHandler(result);
+        }];
+    }
+}
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(wkWebViewShowInputPanelInfo:defaultText:block:)]) {
+        [self.delegate wkWebViewShowInputPanelInfo:prompt defaultText:defaultText block:^(NSString * _Nullable result) {
+            completionHandler(result);
+        }];
+    }
+}
+
+
+
+
 ///--  还没用到
 #pragma mark - CALLBACK IMYVKWebView Delegate
 
@@ -298,6 +340,19 @@
     }
     else {
         return [(WKWebView*)self.realWebView loadHTMLString:string baseURL:baseURL];
+    }
+}
+- (id)loadData:(NSData *)data MIMEType:(NSString *)MIMEType characterEncodingName:(NSString *)characterEncodingName baseURL:(NSURL *)baseURL {
+    if (data) {
+        if (_usingUIWebView) {
+            [(UIWebView*)self.realWebView loadData:data MIMEType:MIMEType textEncodingName:characterEncodingName baseURL:baseURL];
+            return nil;
+        }
+        else {
+            return [(WKWebView*)self.realWebView loadData:data MIMEType:MIMEType characterEncodingName:characterEncodingName baseURL:baseURL];
+        }
+    }else {
+        return nil;
     }
 }
 - (NSURLRequest*)currentRequest

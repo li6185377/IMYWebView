@@ -18,6 +18,11 @@
 - (void)webViewDidFinishLoad:(IMYWebView*)webView;
 - (void)webView:(IMYWebView*)webView didFailLoadWithError:(NSError*)error;
 - (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)wkWebViewShowAlterInfo:(NSString *)message;
+
+- (void)wkWebViewShowConformInfo:(NSString *)message block:(void (^_Nonnull)(BOOL result))completionHandler;
+
+- (void)wkWebViewShowInputPanelInfo:(nullable NSString *)prompt defaultText:(nullable NSString *)defaultText block:(void (^_Nonnull)(NSString * _Nullable result))completionHandler;
 
 @end
 
@@ -44,6 +49,9 @@
 ///WKWebView 跟网页进行交互的方法。
 - (void)addScriptMessageHandler:(id<WKScriptMessageHandler>)scriptMessageHandler name:(NSString*)name;
 
+- (void)removeScriptMessageHandlerName:(NSString*)name;
+
+
 ///back 层数
 - (NSInteger)countOfHistory;
 - (void)gobackWithStep:(NSInteger)step;
@@ -53,6 +61,7 @@
 
 - (id)loadRequest:(NSURLRequest*)request;
 - (id)loadHTMLString:(NSString*)string baseURL:(NSURL*)baseURL;
+- (id)loadData:(NSData *)data MIMEType:(NSString *)MIMEType characterEncodingName:(NSString *)characterEncodingName baseURL:(NSURL *)baseURL;
 
 @property (nonatomic, readonly, copy) NSString* title;
 @property (nonatomic, readonly) NSURLRequest* currentRequest;
