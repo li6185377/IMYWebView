@@ -2,9 +2,6 @@
 UIWebView seamless switching to WKWebView <br>
 无缝切换 UIWebView 为 WKWebView  
 
-QQ群号 113767274  有什么问题或者改进的地方大家一起讨论
-
-
 ------------------------------------
 要求
 ====================================
